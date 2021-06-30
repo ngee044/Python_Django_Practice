@@ -10,8 +10,9 @@ class Question(models.Model):
         return self.question_text
 
     def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
-
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.pub_date <= now
+        
 class Choice(models.Model):
     # Question Class를 참조하겠다 ForeignKey을 잘 알아보자 on_delete는 Question 객체가 지워지면 나도 같이 지워지겠다.
     question = models.ForeignKey(Question, on_delete=models.CASCADE) 
